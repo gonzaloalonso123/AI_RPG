@@ -1,0 +1,14 @@
+{
+  "name": "@story/domain",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./content": "./src/content.ts",
+    "./stats": "./src/stats.ts"
+  },
+  "dependencies": {
+    "@story/contracts": "workspace:*"
+  }
+}

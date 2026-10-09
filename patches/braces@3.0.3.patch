@@ -1,0 +1,13 @@
+diff --git a/lib/parse.js b/lib/parse.js
+index 3a6988e629f52aee6609dc5ec290a5e9ff47cecb..1c537fcb4c6fbcf06de0751c5eb455c70a40b49e 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -74,6 +74,8 @@ const parse = (input, options = {}) => {
+   push({ type: 'bos' });
+ 
+   while (index < length) {
++    // Bound nesting before recursive stringify/compile can exhaust the stack.
++    if (stack.length > 64) throw new SyntaxError("Brace nesting exceeds safe depth (64)");
+     block = stack[stack.length - 1];
+     value = advance();
+ 

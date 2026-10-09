@@ -1,0 +1,10 @@
+rules_version = '2';
+service firebase.storage {
+ match /b/{bucket}/o {
+  match /campaigns/{cid}/{asset} {
+   allow read: if request.auth != null && request.auth.uid in firestore.get(/databases/(default)/documents/campaigns/$(cid)).data.members;
+   allow write: if false;
+  }
+  match /{allPaths=**} {allow read, write: if false;}
+ }
+}

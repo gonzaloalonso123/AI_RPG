@@ -1,0 +1,42 @@
+name: Deploy staging (explicit)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  staging:
+    environment: staging
+    runs-on: ubuntu-latest
+    env:
+      GCLOUD_PROJECT: ${{ vars.FIREBASE_PROJECT_ID }}
+      VITE_FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+      VITE_FIREBASE_API_KEY: ${{ vars.FIREBASE_API_KEY }}
+      VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.FIREBASE_AUTH_DOMAIN }}
+      VITE_FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
+      VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.FIREBASE_STORAGE_BUCKET }}
+      VITE_FIREBASE_DATABASE_URL: ${{ vars.FIREBASE_DATABASE_URL }}
+      VITE_APPCHECK_SITE_KEY: ${{ vars.APPCHECK_SITE_KEY }}
+      AI_MODE: live
+      ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS }}
+      DAILY_BUDGET_USD: ${{ vars.DAILY_BUDGET_USD }}
+      SESSION_BUDGET_USD: ${{ vars.SESSION_BUDGET_USD }}
+      TEXT_RESERVATION_USD: ${{ vars.TEXT_RESERVATION_USD }}
+      IMAGE_RESERVATION_USD: ${{ vars.IMAGE_RESERVATION_USD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.DEPLOY_SERVICE_ACCOUNT }}
+      - run: pnpm install --frozen-lockfile && pnpm typecheck && pnpm test && pnpm build
+      - run: |
+          pnpm preflight --live
+          node scripts/write-deploy-env.mjs
+          pnpm exec firebase deploy --project "$GCLOUD_PROJECT" --only hosting,functions,firestore,storage,database --non-interactive

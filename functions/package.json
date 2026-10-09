@@ -1,0 +1,17 @@
+{
+  "name": "@story/functions",
+  "private": true,
+  "main": "lib/index.cjs",
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "firebase-admin": "14.5.0",
+    "firebase-functions": "7.4.0",
+    "@story/contracts": "workspace:*",
+    "@story/domain": "workspace:*",
+    "@story/ai": "workspace:*",
+    "@story/config": "workspace:*",
+    "zod": "4.6.5"
+  }
+}

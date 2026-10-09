@@ -1,0 +1,10 @@
+node_modules
+**/lib
+**/dist
+pnpm-lock.yaml
+functions/runtime-package-lock.json
+docs/PRODUCT_SPEC.md
+.emulator-data
+playwright-report
+test-results
+*-debug.log

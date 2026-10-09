@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "types": ["node", "vite/client"],
+    "paths": {
+      "@story/contracts": ["./packages/contracts/src/index.ts"],
+      "@story/domain": ["./packages/domain/src/index.ts"],
+      "@story/ai": ["./packages/ai/src/index.ts"],
+      "@story/config": ["./packages/config/src/index.ts"],
+      "@story/domain/*": ["./packages/domain/src/*"]
+    }
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "packages/**/*.ts",
+    "functions/src/**/*.ts",
+    "tests/**/*.ts",
+    "*.ts"
+  ]
+}

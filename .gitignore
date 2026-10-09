@@ -1,0 +1,17 @@
+node_modules/
+dist/
+lib/
+.env
+.env.local
+.env.*.local
+.runtimeconfig.json
+*-debug.log
+.emulator-data/
+playwright-report/
+test-results/
+coverage/
+*.tsbuildinfo
+functions/.secret.local
+
+.env.*
+!.env.example
